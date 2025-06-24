@@ -100,6 +100,9 @@ ggplot(summary_long_tbl, aes(x = level, y = value)) +
 
 The faceted bar chart shows three separate panels, one for each player attribute. In the Experience panel it is clear that Expert players have the highest average session count (around nine sessions), followed by Intermediate players (about six sessions) and Novice players (around four sessions). The Subscription panel shows that subscribed players spend roughly seven hours on average, while non-subscribed players average closer to four hours of total playtime. In the Gender panel male players log about 6.3 sessions on average, female players about 5.8 sessions, and players identifying as Other about 4.1 sessions. Rotating the labels ensures each category name is legible.
 
+Conclusion:
+In summary, experience level and subscription status emerge as the strongest predictors of heavy server usage, with Expert and subscribed players logging significantly more sessions and playtime than their counterparts. Gender and age show smaller effects but still contribute to the overall usage pattern. These insights can guide resource planning and targeted engagement efforts to better serve the most active segments of the player community.
+
 
 
 
