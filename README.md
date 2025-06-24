@@ -65,9 +65,40 @@ gender_sessions_tbl <- players_with_metrics_tbl |>
   arrange(desc(avg_sessions_per_player))
 gender_sessions_tbl
 
+#5. Inspect your results
+experience_rankings_tbl
+subscription_playtime_tbl
+gender_sessions_tbl
 
+#6. Visualization
+options(repr.plot.width = 9, repr.plot.height = 8)
+summary_long_tbl <- players_with_metrics_tbl |>
+  group_by(experience) |>
+  summarise(avg_sessions = mean(num_sessions), .groups = "drop") |>
+  mutate(attribute = "Experience", level = experience, value = avg_sessions) |>
+  bind_rows(
+    players_with_metrics_tbl |>
+      group_by(subscribe) |>
+      summarise(avg = mean(total_play_hours), .groups = "drop") |>
+      mutate(attribute = "Subscription", level = as.character(subscribe), value = avg),
+    players_with_metrics_tbl |>
+      group_by(gender) |>
+      summarise(avg = mean(num_sessions), .groups = "drop") |>
+      mutate(attribute = "Gender", level = gender, value = avg)) |>
+  select(attribute, level, value)
 
+#faceted bar chart
+ggplot(summary_long_tbl, aes(x = level, y = value)) +
+  geom_col() +
+  facet_wrap(~attribute, scales = "free_y") +
+  labs(
+    x = NULL,
+    y = "Average Value",
+    title = "Average Sessions and Play Hours by Player Attribute") +
+  theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 
+The faceted bar chart shows three separate panels, one for each player attribute. In the Experience panel it is clear that Expert players have the highest average session count (around nine sessions), followed by Intermediate players (about six sessions) and Novice players (around four sessions). The Subscription panel shows that subscribed players spend roughly seven hours on average, while non-subscribed players average closer to four hours of total playtime. In the Gender panel male players log about 6.3 sessions on average, female players about 5.8 sessions, and players identifying as Other about 4.1 sessions. Rotating the labels ensures each category name is legible.
 
 
 
