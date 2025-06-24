@@ -30,7 +30,7 @@ player_sessions_summary_tbl
 
 Session duration is calculated by subtracting the start timestamp from the end timestamp and converting the difference from milliseconds into hours. Grouping these durations by hashed email produces two per-player metrics: num_sessions, which counts all sessions per user, and total_play_hours, which sums all session durations. These metrics are merged back into the players table using a left join on the hashed email key, preserving every registered account and replacing missing values with zero. This ensures that calculated averages reflect the entire roster of registered users rather than only those who actively logged in.
 
-# 3. Join those summaries back to the players table
+#3. Join those summaries back to the players table
 players_with_metrics_tbl <- players |>
   left_join(player_sessions_summary_tbl, by = "hashedEmail") |>
   mutate(
