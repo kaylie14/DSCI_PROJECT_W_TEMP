@@ -38,6 +38,33 @@ players_with_metrics_tbl <- players |>
     total_play_hours = replace_na(total_play_hours, 0))
 players_with_metrics_tbl
 
+The enriched player table reveals a clear long-tail pattern in usage. On average, a player logs about six sessions, with most users falling between two and ten sessions and a small number reaching nearly thirty sessions. Total playtime averages around five hours per player, although some power users accumulate more than fifteen hours. This distribution shows that while most players engage modestly, a dedicated minority drives the bulk of server load.
+
+#4 Which experience level plays the most (by avg sessions)?
+experience_rankings_tbl <- players_with_metrics_tbl |>
+  group_by(experience) |>
+  summarise(avg_sessions_per_player = mean(num_sessions),
+    .groups = "drop") |>
+  arrange(desc(avg_sessions_per_player))
+experience_rankings_tbl
+
+#4 cont: Which subscription status yields the most playtime?
+subscription_playtime_tbl <- players_with_metrics_tbl |>
+  group_by(subscribe) |>
+  summarise(
+    avg_play_hours_per_player = mean(total_play_hours),
+    .groups = "drop") |>
+  arrange(desc(avg_play_hours_per_player))
+subscription_playtime_tbl
+
+#4 last part: Which gender plays most sessions?
+gender_sessions_tbl <- players_with_metrics_tbl |>
+  group_by(gender) |>
+  summarise(avg_sessions_per_player = mean(num_sessions),
+    .groups = "drop") |>
+  arrange(desc(avg_sessions_per_player))
+gender_sessions_tbl
+
 
 
 
